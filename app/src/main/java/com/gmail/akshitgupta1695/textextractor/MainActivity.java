@@ -24,10 +24,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextDetector;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private CardView mCardView;
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("CurrentPhotoPath",mCurrentPhotoPath);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -59,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         imageview=(ImageView)findViewById(R.id.imageview);
         mTextView=(TextView)findViewById(R.id.textView);
         mCardView=(CardView)findViewById(R.id.container_card_view);
+        if(savedInstanceState!=null){
+            mCurrentPhotoPath=savedInstanceState.getString("CurrentPhotoPath");
+            mImageBitmap=getBitmap(mCurrentPhotoPath);
+            imageview.setImageBitmap(mImageBitmap);
+        }
 
     }
 
@@ -129,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         detector.detectInImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
             @Override
             public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                processTxt(firebaseVisionText);
+                processText(firebaseVisionText);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -139,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void processTxt(FirebaseVisionText text) {
+    private void processText(FirebaseVisionText text) {
         List<FirebaseVisionText.Block> blocks = text.getBlocks();
         if (blocks.size() == 0) {
             Toast.makeText(MainActivity.this, "No Text :(", Toast.LENGTH_LONG).show();
@@ -149,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
         for (FirebaseVisionText.Block block : text.getBlocks()) {
             String txt = block.getText();
             textBuilder.append(txt+"\n");
-
-
         }
         mCardView.setVisibility(View.VISIBLE);
         mTextView.setText(textBuilder.toString());
