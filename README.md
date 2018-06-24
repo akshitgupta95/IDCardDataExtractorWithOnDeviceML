@@ -5,6 +5,8 @@ Since Aadhar Card and Pan Card contain sensitive info about users, sending image
 raises security concerns particulary if the servers are located outside India.  
 However, here all the text is extracted using machine learning implemented on device.All computations are happening on device and no server/internet connection is required once the trained ML model has been downloaded.
 
+<img src="https://lh3.googleusercontent.com/YWqjhZNhM61O0UbAzCW6pv3VhZMLYXnJfoyiqbd15D53rouix0bZiLkuD-ePmKGx1rc006cy19FeHyj_wR1nJ9Rv397u-nXTa3klhCVHrIqyRad8oPsTFJs8gdPUqtkAIdJktUwZzDjlArEMCKzrOt11NuQdTSfgsKIywHT7G8jZpmWrbXqB1W9r7-CbByp2vc1d3GEvS0okqBi8ZwzoBr68tRq9wi3ZJsbmuHcnC6qj9hBLMnUBJrv00vZvcvwaQ8HfcDSv7y1bj1Vt__lk68AX1cdkWN8kb7zFvI-nNtxR3ALnRzvIsIFSAXhmCaM7ne2eWVb2YlTWAjchAUAWFNfo0v3_mk4tc1mFc7y5vgo2epMvs3zbzTUhJTEmZjgmB6ygwv92uWAyk8VyUHRYWGxsJ_ZtiCoFRZjoRz5vd_g1Z_KvHh2kxU9MMhKU3QMaFBNHg-y6owjqGrOOaclGuR6RJWfFCUv1vKm4STdoZb31JhOdCT6AdU1ngGNboAQ37gpoaxFqRwQ3EJaJUvAQywkiCD7yTB2-hSZ9Uo9xDaM0y13jyAV4Fj6twhe9EAuIC4S1UbBUL9iWEXIwsLCJCU0PkecCkWvHQ8O4iQ10=w2550-h1632-no" align="center" width="1000">
+
 ## Supported Identity Cards (for Indian Citizens only)
 
 1.Aadhar Card  
