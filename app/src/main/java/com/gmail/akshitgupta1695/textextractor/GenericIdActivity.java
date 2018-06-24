@@ -3,10 +3,12 @@ package com.gmail.akshitgupta1695.textextractor;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmail.akshitgupta1695.textextractor.Utilities.CameraUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -29,10 +32,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
-public class MainActivity extends AppCompatActivity {
+public class GenericIdActivity extends AppCompatActivity {
 
-    private Button takePicture;
+
     private Button ocr;
     private ImageView imageview;
     String mCurrentPhotoPath;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap mImageBitmap;
     private TextView mTextView;
     private CardView mCardView;
+    private Button reset;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -51,22 +56,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        takePicture=(Button)findViewById(R.id.clickImage);
+        setContentView(R.layout.activity_genericid);
         ocr=(Button)findViewById(R.id.ocr);
-        ocr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                detectTxt();
-            }
-        });
         imageview=(ImageView)findViewById(R.id.imageview);
         mTextView=(TextView)findViewById(R.id.textView);
         mCardView=(CardView)findViewById(R.id.container_card_view);
+        reset=findViewById(R.id.reset);
+        reset.setText("R"+"\n"+"E"+"\n"+"S"+"\n"+"E"+"\n"+"T");
         if(savedInstanceState!=null){
             mCurrentPhotoPath=savedInstanceState.getString("CurrentPhotoPath");
-            mImageBitmap=getBitmap(mCurrentPhotoPath);
+            mImageBitmap=CameraUtils.getBitmap(mCurrentPhotoPath);
             imageview.setImageBitmap(mImageBitmap);
+            reset.setVisibility(View.VISIBLE);
         }
 
     }
@@ -78,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = createImageFile();
+                photoFile = CameraUtils.createImageFile(this);
+                mCurrentPhotoPath=photoFile.getAbsolutePath();
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 Toast.makeText(this,"Error creating file",Toast.LENGTH_SHORT).show();
@@ -95,46 +97,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
-                mImageBitmap = getBitmap(mCurrentPhotoPath);
+                mImageBitmap = CameraUtils.getBitmap(mCurrentPhotoPath);
                 imageview.setImageBitmap(mImageBitmap);
+                reset.setVisibility(View.VISIBLE);
 
         }
     }
 
-    public Bitmap getBitmap(String path) {
-        try {
+    public void reset(View view) {
+        mImageBitmap=null;
+        imageview.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.camera));
+        reset.setVisibility(View.GONE);
+    }
 
-            File f= new File(path);
-             Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
-           return myBitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }}
+    public void detectText(View view) {
 
-    private void detectTxt() {
+        if(mImageBitmap!=null){
+
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(mImageBitmap);
+
         FirebaseVisionTextDetector detector = FirebaseVision.getInstance().getVisionTextDetector();
+
         detector.detectInImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
             @Override
             public void onSuccess(FirebaseVisionText firebaseVisionText) {
@@ -146,20 +135,42 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        }
+        else {
+            Toast.makeText(this,"Please Take a Picture first",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void processText(FirebaseVisionText text) {
+
         List<FirebaseVisionText.Block> blocks = text.getBlocks();
+
         if (blocks.size() == 0) {
-            Toast.makeText(MainActivity.this, "No Text :(", Toast.LENGTH_LONG).show();
+            Toast.makeText(GenericIdActivity.this, "No Text :(", Toast.LENGTH_LONG).show();
             return;
         }
         StringBuilder textBuilder=new StringBuilder();
+        TreeMap<String,String> map=new TreeMap<>();
         for (FirebaseVisionText.Block block : text.getBlocks()) {
-            String txt = block.getText();
-            textBuilder.append(txt+"\n");
+
+
+            for(FirebaseVisionText.Line line:block.getLines()){
+
+                Rect rect=line.getBoundingBox();
+                String y=String.valueOf(rect.exactCenterY());
+                String lineTxt=line.getText();
+                map.put(y,lineTxt);
+
+            }
+
         }
-        mCardView.setVisibility(View.VISIBLE);
+        for(TreeMap.Entry<String ,String > entry:map.entrySet()){
+            textBuilder.append(entry.getValue()+"\n");
+
+        }
         mTextView.setText(textBuilder.toString());
     }
+
+
 }
