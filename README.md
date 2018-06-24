@@ -2,9 +2,8 @@
 
 Text Extraction from Aadhaar Card,Pan Card for Indian Citizens using on-device(Android) machine learning. 
 Since Aadhar Card and Pan Card contain sensitive info about users, sending images of these to cloud to extract data
-raises security concerns particulary if the servers are located outside India. However, here all the text is extracted using
-machine learning implemented on device.  
-All computations are happening on device and no server/internet connection is required once the trained ML model has been downloaded.
+raises security concerns particulary if the servers are located outside India.  
+However, here all the text is extracted using machine learning implemented on device.All computations are happening on device and no server/internet connection is required once the trained ML model has been downloaded.
 
 ## Supported Identity Cards (for Indian Citizens only)
 
