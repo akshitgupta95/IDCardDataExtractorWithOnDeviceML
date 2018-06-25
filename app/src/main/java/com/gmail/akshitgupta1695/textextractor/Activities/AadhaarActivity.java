@@ -1,4 +1,4 @@
-package com.gmail.akshitgupta1695.textextractor;
+package com.gmail.akshitgupta1695.textextractor.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmail.akshitgupta1695.textextractor.PostProcessing.AadhaarProcessing;
+import com.gmail.akshitgupta1695.textextractor.R;
 import com.gmail.akshitgupta1695.textextractor.Utilities.CameraUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +30,7 @@ import com.google.firebase.ml.vision.text.FirebaseVisionTextDetector;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -157,7 +160,8 @@ public class AadhaarActivity extends AppCompatActivity {
             detector.detectInImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
                 @Override
                 public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                    processExtractedTextForFrontPic(firebaseVisionText);
+                    HashMap<String ,String> dataMap=new AadhaarProcessing().processExtractedTextForFrontPic(firebaseVisionText,getApplicationContext());
+                    presentFrontOutput(dataMap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -169,7 +173,8 @@ public class AadhaarActivity extends AppCompatActivity {
             detector.detectInImage(image2).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
                 @Override
                 public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                    processExtractedTextForBackPic(firebaseVisionText);
+                    HashMap<String ,String> dataMap=new AadhaarProcessing().processExtractedTextForBackPic(firebaseVisionText,getApplicationContext());
+                    presentBackOutput(dataMap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -186,131 +191,26 @@ public class AadhaarActivity extends AppCompatActivity {
 
     }
 
-    private void processExtractedTextForFrontPic(FirebaseVisionText text) {
-
-        List<FirebaseVisionText.Block> blocks = text.getBlocks();
-
-        if (blocks.size() == 0) {
-            Toast.makeText(AadhaarActivity.this, "No Text :(", Toast.LENGTH_LONG).show();
-            return;
-        }
-        TreeMap<String,String> map=new TreeMap<>();
-
-        for (FirebaseVisionText.Block block : text.getBlocks()) {
-            for(FirebaseVisionText.Line line:block.getLines()){
-                Rect rect=line.getBoundingBox();
-                String y=String.valueOf(rect.exactCenterY());
-                String lineTxt=line.getText().toLowerCase();
-                map.put(y,lineTxt);
-            }
+    private void presentFrontOutput(HashMap<String,String> dataMap){
+        if(dataMap!=null){
+            aadhaarNumber.setText(dataMap.get("aadhaar"), TextView.BufferType.EDITABLE);
+            gender.setText(dataMap.get("gender"), TextView.BufferType.EDITABLE);
+            fatherName.setText(dataMap.get("fatherName"), TextView.BufferType.EDITABLE);
+            yearOfBirth.setText(dataMap.get("yob"), TextView.BufferType.EDITABLE);
+            name.setText(dataMap.get("name"), TextView.BufferType.EDITABLE);
 
         }
-
-        List<String> orderedData=new ArrayList<>(map.values());
-
-        int i=0;
-        String regex="\\d\\d\\d\\d([,\\s])?\\d\\d\\d\\d.*";
-        for(i=0;i<orderedData.size();i++){
-
-            if(orderedData.get(i).matches(regex)){
-                aadhaarNumber.setText(orderedData.get(i), TextView.BufferType.EDITABLE);
-                break;
-            }
-
-        }
-        //setting gender first
-        for(i=0;i<orderedData.size();i++){
-
-            if(orderedData.get(i).contains("female")){
-                gender.setText("Female", TextView.BufferType.EDITABLE);
-                break;
-            }
-            else if(orderedData.get(i).contains("male")){
-                gender.setText("Male", TextView.BufferType.EDITABLE);
-                break;
-            }
-        }
-
-        if(aadhaarNumber.getText()==null){
-            if(i+1<orderedData.size())
-            aadhaarNumber.setText(orderedData.get(i+1),TextView.BufferType.EDITABLE);
-        }
-        //searching for father
-        for(i=0;i<orderedData.size();i++){
-
-            if(orderedData.get(i).contains("father")){
-                fatherName.setText(orderedData.get(i).replace("father","").replace(":",""), TextView.BufferType.EDITABLE);
-                break;
-            }
-
-        }
-
-        for(i=0;i<orderedData.size();i++){
-
-            if(orderedData.get(i).contains("birth")){
-                yearOfBirth.setText(orderedData.get(i).substring(orderedData.get(i).length()-4), TextView.BufferType.EDITABLE);
-                break;
-            }
-
-        }
-
-        if(i-1>-1 && !orderedData.get(i-1).contains("father"))
-        name.setText(orderedData.get(i-1), TextView.BufferType.EDITABLE);
-
     }
 
-    private void processExtractedTextForBackPic(FirebaseVisionText text) {
-
-        List<FirebaseVisionText.Block> blocks = text.getBlocks();
-
-        if (blocks.size() == 0) {
-            Toast.makeText(AadhaarActivity.this, "No Text :(", Toast.LENGTH_LONG).show();
-            return;
-        }
-        TreeMap<String,String> map=new TreeMap<>();
-
-        for (FirebaseVisionText.Block block : text.getBlocks()) {
-            for(FirebaseVisionText.Line line:block.getLines()){
-                Rect rect=line.getBoundingBox();
-                String y=String.valueOf(rect.exactCenterY());
-                String lineTxt=line.getText().toLowerCase();
-                map.put(y,lineTxt);
-            }
+    private void presentBackOutput(HashMap<String,String> dataMap){
+        if(dataMap!=null){
+            addressLine1.setText(dataMap.get("addressLine1"), TextView.BufferType.EDITABLE);
+            addressLine2.setText(dataMap.get("addressLine2"), TextView.BufferType.EDITABLE);
+            pincode.setText(dataMap.get("pincode"), TextView.BufferType.EDITABLE);
 
         }
-
-        List<String> orderedData=new ArrayList<>(map.values());
-
-
-        //for address first line
-        int i=0;
-        for(i=0;i<orderedData.size();i++){
-
-            if(orderedData.get(i).contains("address")){
-                addressLine1.setText(orderedData.get(i).replaceAll(".*address","").replace(":",""), TextView.BufferType.EDITABLE);
-                break;
-            }
-
-        }
-
-        if(i+1<orderedData.size())
-            addressLine2.setText(orderedData.get(i+1),TextView.BufferType.EDITABLE);
-
-        //for pin code
-        String regex="\\d\\d\\d\\d\\d\\d";
-        for( i=0;i<orderedData.size();i++){
-
-            if(orderedData.get(i).matches(regex) || orderedData.contains(".*"+regex)){
-                pincode.setText(orderedData.get(i), TextView.BufferType.EDITABLE);
-                break;
-            }
-
-        }
-
-
-
-
     }
+
 
 
 }

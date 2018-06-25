@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gmail.akshitgupta1695.textextractor.AadhaarActivity"
+    tools:context="com.gmail.akshitgupta1695.textextractor.Activities.AadhaarActivity"
     android:focusableInTouchMode="true"
     android:descendantFocusability="beforeDescendants"
     >

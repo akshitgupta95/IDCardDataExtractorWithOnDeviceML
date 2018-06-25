@@ -26,7 +26,7 @@
         </provider>
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:label="Data Extractor (On-Device ML)"
             android:launchMode="singleTop">
             <intent-filter>
@@ -36,16 +36,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AadhaarActivity"
+            android:name=".Activities.AadhaarActivity"
             android:label="Aadhaar Card Data Extract"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:parentActivityName=".Activities.HomeActivity"></activity>
         <activity
-            android:name=".GenericIdActivity"
+            android:name=".Activities.GenericIdActivity"
             android:label="Generic ID Card Data Extract"
-            android:parentActivityName=".HomeActivity"></activity>
-        <activity android:name=".PanCardActivity"
+            android:parentActivityName=".Activities.HomeActivity"></activity>
+        <activity android:name=".Activities.PanCardActivity"
             android:label="PAN Card Data Extract"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".Activities.HomeActivity">
         </activity>
     </application>
 
