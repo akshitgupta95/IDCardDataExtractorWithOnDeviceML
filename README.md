@@ -5,7 +5,7 @@ Since Aadhar Card and Pan Card contain sensitive info about users, sending image
 raises security concerns particulary if the servers are located outside India.  
 However, here all the text is extracted using machine learning implemented on device.All computations are happening on device and no server/internet connection is required once the trained ML model has been downloaded.
 
-<img src="https://lh3.googleusercontent.com/YWqjhZNhM61O0UbAzCW6pv3VhZMLYXnJfoyiqbd15D53rouix0bZiLkuD-ePmKGx1rc006cy19FeHyj_wR1nJ9Rv397u-nXTa3klhCVHrIqyRad8oPsTFJs8gdPUqtkAIdJktUwZzDjlArEMCKzrOt11NuQdTSfgsKIywHT7G8jZpmWrbXqB1W9r7-CbByp2vc1d3GEvS0okqBi8ZwzoBr68tRq9wi3ZJsbmuHcnC6qj9hBLMnUBJrv00vZvcvwaQ8HfcDSv7y1bj1Vt__lk68AX1cdkWN8kb7zFvI-nNtxR3ALnRzvIsIFSAXhmCaM7ne2eWVb2YlTWAjchAUAWFNfo0v3_mk4tc1mFc7y5vgo2epMvs3zbzTUhJTEmZjgmB6ygwv92uWAyk8VyUHRYWGxsJ_ZtiCoFRZjoRz5vd_g1Z_KvHh2kxU9MMhKU3QMaFBNHg-y6owjqGrOOaclGuR6RJWfFCUv1vKm4STdoZb31JhOdCT6AdU1ngGNboAQ37gpoaxFqRwQ3EJaJUvAQywkiCD7yTB2-hSZ9Uo9xDaM0y13jyAV4Fj6twhe9EAuIC4S1UbBUL9iWEXIwsLCJCU0PkecCkWvHQ8O4iQ10=w2550-h1632-no" align="center" width="1000">
+<img src="https://lh3.googleusercontent.com/9JisclTeXnC14T5fzUkMyTkGXZ4rSWtZ2QxLBqRJj1Ce6nG52RVj0KGZDOIl16FKqIy48SAF-hPMhB-4qqeqFIKUetpoWYzcsaeQK1_eJG3v17cX5UHaWOB5xtqHUtVU8GfeJT2CufDW8J-wGIQg4E1jzLBE95GRfiEtNzHL79BIiaB0hLx9gMKuoAulHIM9c0pl9XWj0bJUuFrFgjzNce4V8KvWsxyVPKoOGjTOvCCjHPS7jxgck9j0fwxpKS1KVVtFT-ycPLH8DkHTCk6QZHQM_L-TYKPykKrhqXklNZf1aXIU3-ptahHbuG-eTgXVZ_zos3Gel_X-cyNg7FpyrdzrbYYRT0_ObWbYtiHTpVBw7WSDWDLM8iFJvzFWF6jazxQWsSiSQXgE6nZzoCtUlYC4bKLsfLtWa5-MN1Qno8k2eMyZ489DO5IKIUynHZUDHUkL6cwDyN1SlZxhJkT7Nd3PFHmFG_vOtZ99BH7gWVuXFqV4cuMUdfGB9fUkzeYnp_g0Ztw5h3HYtkUEsHYwEx2q9gRhL3F-ps-3-mbsfnWQR5t7LsiiAQGrQt1iFFdoNjSKX9ntLj0Zk0WlYsRyCbhtHkmqdjh9ne1tTGlhsf37ihhuQBt-ljjXNtFYsqSSkmGdHYcqooMJUfp_4eNZvOnCGOIh5NMsmA=w2160-h1384-no" align="center" width="1000">
 
 ## Supported Identity Cards (for Indian Citizens only)
 
@@ -20,7 +20,7 @@ Here a pretrained ML Model is used whose output is fed to a data post processing
 I am not an expert in data science ,however if someone is really looking to build his own Machine learning model,[Tensorflow lite is place to start.](https://www.tensorflow.org/mobile/tflite/)  
 You can make a custom Tensorflow model,convert it to TF lite and then embed it into the android app.  
 
-<img src="https://lh3.googleusercontent.com/mX0rXJFyniyVKx4nWfyEYJ_5ln974hfixjHlN4Bxcmy9DvkcTUvdC5t927LVdUrlCg5dOxyKEIZ4v7AQQJx7Z72d8F4O-le6d_Vj2pvoS5j8nsMf4ceQsiT7ZsavtzOpgUWhdzhrHyBlQfDLcDfHcN9KY_s0T6mYhlS6T78VKKlaY4E-0vme6p2gnpNrMuzYxxzsNRO1Qbopgl2rUgFYnOexqTvuH_NPa5LPJFJoduKZV_N9FFMPBUmLLStPueBWWmvhJ--q9aXJVm9Ec404X2yRnLNX2n99SbrIOiqkf7cDSFMfNPtryPsYp1UdJPhcclYT_dcdyk8b7XR83pLETqwYnZog_pPK8muD1Cao0AbpHmcUyySHbxruCn9EAbPHss2uu01m3YulmhJX3Q1gCPBpgfTjYilJqqhv6e6hMZA76tajq0B4wmUZ_IluUMZKMO4unBKcAPF-Ce-kCRNweQlgH7nFXOfy45vsqe391yuspI_aBNxndwjcMUc2oYXsckh8nuLK_8EgnYLMaWFjy3iJhaDJemBJZ7T-MUMMBgBtCasrHWR_Us_sNVIvgPE5ezSUajqkNl_-doVSZmvb0FpNk22_jyiNkAR0bYoC=w797-h461-no" align="center" width="800">
+<img src="https://lh3.googleusercontent.com/zjrB7NLUu6oq_3cxj6RmSojJN7AE2aEtXwnpb7xrJSj5YGAABCJGF63w9wHIVLPqIj7YpT4bbZaBJabIGUcYYrlapxI02dTD5zu1MLKCvkZWapDADi6p4PvY-ptwnxsIYHRGesaKo_Wie_G5D4mVRPgCIE9HerAGFDAkNY9dUwS4QNQNWAX2G6t3DfCZ1ZgmrrtCbWBbgAlKBLGbYTzWPmVdMvIip7fZdD5HlASVuMle1-afpB6rAlj-R-9_HP3PfiQA3hiLtmKUVv_XHFkxU0GyLLfPcxqNvnRcJ9HxGFauG5Cf6mvUqBnnA-ER-j2qqo7uxMEOW3mfPLjXTll6yEC6CelsF_KNVFI_EgBZiPvPDUd8iNEAiwxHqLyHvUQ-5e4YbzhKPh5DudERckMIoJrIUUk3bYeug9Xbkn0SQ_yXUGBCPDnfDBzy9zXMpT44qy9jiR4DSZ_SSXAJkK4tm8Yv-J_wknXbyeaHjF3jUSMBvi34XcRhyWngzpikgXmQyujlPD_YTW-mU6wW6rDa1WQY5-d5X3ufujeN48r3SqWcAkaX0ReA4a85Idbv_v37YHR5nL_uo5nQgmVbMcjdcIO2btDeaAT1QuuQlfO_=w797-h461-no" align="center" width="800">
 
 
 ## Setup
@@ -29,9 +29,9 @@ You can make a custom Tensorflow model,convert it to TF lite and then embed it i
 2.After successfully connecting to firebase, a pre-trained Mahine Learning model for text extraction is downloaded using MLKit.  
 3.If everything is in place,you should be able to run the app for data extraction on an android phone.  
 4.The app has three modes or activities (Select appropriate mode):  
-  I : Aadhar Card : here output of pretrained ML Model from MLKit is processed specifically for Aadhaar Cards. 
-  II: Pan Card : here output of pretrained ML Model from MLKit is processed specifically for Pan Cards. 
-  III: Generic ID Card : Here standard output of ML model from MLKit is shown.  
+  I : Aadhar Card : here output of pretrained ML Model from MLKit is processed specifically for Aadhaar Cards.  
+  II: Pan Card : here output of pretrained ML Model from MLKit is processed specifically for Pan Cards.   
+  III: Generic ID Card : Here standard output of ML model from MLKit is shown.    
 
 **IMPORTANT**: This app was tested on Google Pixel running Android 8.1 which privides support for Neural Networks API to improve performance of
 performing machine learning tasks on-device. Older devices may take slightly longer times to generate output.
